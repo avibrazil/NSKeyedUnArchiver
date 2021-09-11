@@ -11,3 +11,7 @@ Automatically converts well known data types to Python-equivalent data types:
 - NSMutableString, NSString -> unwrap the string
 - NSMutableData, NSData -> unwrap the data
 - NSDate -> datetime
+
+Check [pypi](https://pypi.org/project/NSKeyedUnArchiver/) for packages.
+
+License is LGPL 3.

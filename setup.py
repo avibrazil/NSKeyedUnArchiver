@@ -12,7 +12,7 @@ setuptools.setup(
     description="Decodes Apple's NSKeyedArchiver that were archived into text or binary plist files and returns a usable Python dict",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/avibrazil/iOSbackup",
+    url="https://github.com/avibrazil/NSKeyedUnArchiver",
 #     install_requires=['biplist','pycryptodome'],
     packages=setuptools.find_packages(),
     classifiers=[
