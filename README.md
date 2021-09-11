@@ -15,3 +15,24 @@ Automatically converts well known data types to Python-equivalent data types:
 Check [pypi](https://pypi.org/project/NSKeyedUnArchiver/) for packages.
 
 License is LGPL 3.
+
+## Sample usage
+
+```python
+import NSKeyedUnArchiver
+
+file='/patch/to/file.plist'
+my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(file)
+
+
+data=b'bplist00\xd4\x01\.........'
+my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(file)
+
+
+data='<plist version="1.0">......'
+my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(file)
+
+
+file=PurePath('/patch/to/file.plist')
+my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(file)
+```
