@@ -5,13 +5,13 @@ import pathlib
 import plistlib
 
 
-__version__ = '1.0'
+__version__ = '1.2'
 
 module_logger = logging.getLogger(__name__)
 
 
 
-def _unserialize(o: dict, serialized, start=True):
+def _unserialize(o: dict, serialized: dict, removeClassName: bool, start: bool=True):
     if start:
         reassembled=copy.deepcopy(o)
     else:
@@ -75,6 +75,10 @@ def _unserialize(o: dict, serialized, start=True):
                             datetime.timezone.utc
                         )
 
+                    if removeClassName:
+                        # Remove visual polution
+                        del reassembled[k]['$class']
+
                 finished=True
 
     return reassembled
@@ -82,7 +86,7 @@ def _unserialize(o: dict, serialized, start=True):
 
 
 
-def unserializeNSKeyedArchiver(plist):
+def unserializeNSKeyedArchiver(plist, removeClassName=True):
     """
     plist can be:
     • PurePath   ⟹ open the file and plistlib.loads()
@@ -114,7 +118,7 @@ def unserializeNSKeyedArchiver(plist):
 
     if '$top' in plistdata:
         o=copy.deepcopy(plistdata['$top'])
-        unserialized=_unserialize(o,plistdata['$objects'])
+        unserialized=_unserialize(o,plistdata['$objects'], removeClassName)
     else:
         raise TypeError("Passed object is not an NSKeyedArchiver")
 
