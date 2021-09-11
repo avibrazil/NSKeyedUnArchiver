@@ -26,11 +26,11 @@ my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(file)
 
 
 data=b'bplist00\xd4\x01\.........'
-my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(file)
+my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(data)
 
 
 data='<plist version="1.0">......'
-my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(file)
+my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(data)
 
 
 file=PurePath('/patch/to/file.plist')
