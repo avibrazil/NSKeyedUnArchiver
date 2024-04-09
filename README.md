@@ -16,6 +16,8 @@ Automatically converts well known data types to Python-equivalent data types:
 
 Check [pypi](https://pypi.org/project/NSKeyedUnArchiver/) for packages.
 
+See package name for your system package manager at [Repology](https://repology.org/project/python:nskeyedunarchiver/information).
+
 License is LGPL 3.
 
 ## Sample usage
