@@ -23,7 +23,7 @@ License is LGPL 3.
 ```python
 import NSKeyedUnArchiver
 
-file='/patch/to/file.plist'
+file='/path/to/file.plist'
 my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(file)
 
 
@@ -35,6 +35,6 @@ data='<plist version="1.0">......'
 my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(data)
 
 
-file=PurePath('/patch/to/file.plist')
+file=PurePath('/path/to/file.plist')
 my_dict=NSKeyedUnArchiver.unserializeNSKeyedArchiver(file)
 ```
