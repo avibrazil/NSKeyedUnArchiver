@@ -1,0 +1,33 @@
+[project]
+name = "NSKeyedUnArchiver"
+description = "Decodes Apple's NSKeyedArchiver that were archived into text or binary plist files and returns a usable Python dict"
+readme = "README.md"
+license-files = [ "LICENSE" ]
+requires-python = ">=3.8"
+authors = [
+    { name = "Avi Alkalay", email = "avi@unix.sh" },
+]
+
+classifiers=[
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Developers',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python',
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Markup",
+]
+
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = {attr = "NSKeyedUnArchiver.__version__"}
+
+
+[project.urls]
+Homepage = "https://github.com/avibrazil/NSKeyedUnArchiver"
+Source = "https://github.com/avibrazil/NSKeyedUnArchiver"
+Issues = "https://github.com/avibrazil/NSKeyedUnArchiver/issues/new/choose"
+Pypi = "https://pypi.org/project/NSKeyedUnArchiver"
+
+[tool.setuptools.package-dir]
+investorzilla = "NSKeyedUnArchiver"
