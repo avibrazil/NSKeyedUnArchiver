@@ -5,13 +5,13 @@ import pathlib
 import plistlib
 
 
-__version__ = '1.2'
+__version__ = '1.5.1'
 
 module_logger = logging.getLogger(__name__)
 
 
 
-def _unserialize(o: dict, serialized: dict, removeClassName: bool, start: bool=True):
+def _unserialize(o: dict, serialized: dict, removeClassName: bool, simplify: bool, start: bool=True):
     if start:
         reassembled=copy.deepcopy(o)
     else:
@@ -47,10 +47,18 @@ def _unserialize(o: dict, serialized: dict, removeClassName: bool, start: bool=T
                 if str(reassembled[k]) == '$null': reassembled[k]=None
 
                 finished=False
-            elif isinstance(reassembled[k],dict) or isinstance(reassembled[k],list):
-                reassembled[k]=_unserialize(reassembled[k], serialized, start=False)
 
-                if '$class' in reassembled[k] and '$classes' in reassembled[k]['$class']:
+
+            elif isinstance(reassembled[k],dict) or isinstance(reassembled[k],list):
+                reassembled[k]=_unserialize(
+                    reassembled[k],
+                    serialized=serialized,
+                    removeClassName=removeClassName,
+                    simplify=simplify,
+                    start=False
+                )
+
+                if simplify and '$class' in reassembled[k] and '$classes' in reassembled[k]['$class']:
                     # Specialized handler for common class types
 
                     if 'NSArray' in reassembled[k]['$class']['$classes']:
@@ -75,9 +83,9 @@ def _unserialize(o: dict, serialized: dict, removeClassName: bool, start: bool=T
                             datetime.timezone.utc
                         )
 
-                    if removeClassName:
-                        # Remove visual polution
-                        del reassembled[k]['$class']
+                if removeClassName and isinstance(reassembled[k],dict) and '$class' in reassembled[k]:
+                    # If reassembled object is a dict and if it still contain '$class' and if has to be removed...
+                    del reassembled[k]['$class']
 
                 finished=True
 
@@ -86,7 +94,7 @@ def _unserialize(o: dict, serialized: dict, removeClassName: bool, start: bool=T
 
 
 
-def unserializeNSKeyedArchiver(plist, removeClassName=True):
+def unserializeNSKeyedArchiver(plist, removeClassName=True, simplify=True):
     """
     plist can be:
     • PurePath   ⟹ open the file and plistlib.loads()
@@ -104,7 +112,7 @@ def unserializeNSKeyedArchiver(plist, removeClassName=True):
             # Try to open it as a file
             with open(plist,'rb') as f:
                 plistdata=plistlib.load(f)
-        except FileNotFound:
+        except FileNotFoundError:
             # Try to parse it as plain (XML) text
             plistdata=plistlib.loads(plist)
     elif isinstance(plist,bytes):
@@ -118,7 +126,7 @@ def unserializeNSKeyedArchiver(plist, removeClassName=True):
 
     if '$top' in plistdata:
         o=copy.deepcopy(plistdata['$top'])
-        unserialized=_unserialize(o,plistdata['$objects'], removeClassName)
+        unserialized=_unserialize(o,plistdata['$objects'], removeClassName=removeClassName, simplify=simplify)
     else:
         raise TypeError("Passed object is not an NSKeyedArchiver")
 
