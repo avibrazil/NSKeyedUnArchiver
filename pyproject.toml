@@ -29,5 +29,6 @@ Source = "https://github.com/avibrazil/NSKeyedUnArchiver"
 Issues = "https://github.com/avibrazil/NSKeyedUnArchiver/issues/new/choose"
 Pypi = "https://pypi.org/project/NSKeyedUnArchiver"
 
-[tool.setuptools.package-dir]
-investorzilla = "NSKeyedUnArchiver"
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
